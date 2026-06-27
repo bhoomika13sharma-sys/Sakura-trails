@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakura Trails — Discover Japan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Shippori+Mincho:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════
+   PASTEL JAPAN PALETTE
+════════════════════════════════ */
+:root {
+  --cream:     #FAF6F0;
+  --blush:     #F5E6E8;
+  --pink:      #E8A4B8;
+  --deep-pink: #C4607A;
+  --plum:      #7B3F5E;
+  --sage:      #8FAF8F;
+  --sage-light:#C8DEC8;
+  --gold:      #C4923A;
+  --gold-light:#E8C87A;
+  --misty:     #D4C4E0;
+  --ink:       #2A1F2E;
+  --charcoal:  #3D3040;
+  --mid:       #6B5060;
+  --paper:     #FDF9F3;
+  --glass:     rgba(255,255,255,0.55);
+  --glass-b:   rgba(200,160,175,0.25);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--blush);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--pink),var(--plum));border-radius:3px;}
+
+/* ════════════ STATIC PAPER BG ════════════ */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(232,164,184,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 85% 75%, rgba(143,175,143,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(212,196,224,0.15) 0%, transparent 60%),
+    var(--cream);
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* ════════════ NAVBAR ════════════ */
+nav {
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 4rem;
+  background:rgba(250,246,240,0.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(200,160,175,0.3);
+  transition:all 0.4s;
+}
+
+.logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem;
+  font-weight:700;
+  color:var(--plum);
+  letter-spacing:0.5px;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.logo-kanji {
+  font-family:'Noto Serif JP',serif;
+  font-size:1rem;
+  color:var(--pink);
+  font-weight:300;
+  opacity:0.8;
+}
+
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a {
+  color:var(--mid);
+  text-decoration:none;
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:color 0.25s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;
+  background:var(--deep-pink);transform:scaleX(0);
+  transition:transform 0.3s;transform-origin:left;
+}
+.nav-links a:hover{color:var(--deep-pink);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+.btn-nav {
+  padding:0.6rem 1.6rem;
+  background:var(--plum);
+  color:#fff;border:none;
+  border-radius:50px;
+  font-size:0.78rem;font-weight:500;
+  letter-spacing:1px;cursor:pointer;
+  transition:all 0.3s;text-decoration:none;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-nav:hover{background:var(--deep-pink);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,96,122,0.35);}
+
+/* ════════════ HERO ════════════ */
+#hero {
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:8rem 5rem 4rem;
+  gap:4rem;
+  overflow:hidden;
+}
+
+.hero-left{position:relative;z-index:2;}
+
+.hero-kamon {
+  font-family:'Noto Serif JP',serif;
+  font-size:7rem;
+  color:rgba(196,96,122,0.08);
+  position:absolute;
+  top:-2rem;left:-3rem;
+  font-weight:700;
+  line-height:1;
+  user-select:none;
+  pointer-events:none;
+}
+
+.hero-tag {
+  display:inline-flex;
+  align-items:center;gap:0.5rem;
+  padding:0.4rem 1.1rem;
+  background:rgba(232,164,184,0.25);
+  border:1px solid rgba(232,164,184,0.5);
+  border-radius:50px;
+  font-size:0.7rem;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--plum);
+  margin-bottom:1.5rem;font-weight:500;
+  opacity:0;animation:fadeUp 0.7s 0.2s forwards;
+}
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,5.5vw,5.5rem);
+  font-weight:600;
+  line-height:1.1;
+  color:var(--ink);
+  margin-bottom:0.5rem;
+  opacity:0;animation:fadeUp 0.8s 0.4s forwards;
+}
+.hero-title em {
+  font-style:italic;
+  color:var(--deep-pink);
+}
+.hero-title-jp {
+  font-family:'Noto Serif JP',serif;
+  font-size:1.4rem;
+  color:var(--pink);
+  font-weight:300;
+  display:block;
+  margin-bottom:1.2rem;
+  letter-spacing:0.3em;
+  opacity:0;animation:fadeUp 0.8s 0.5s forwards;
+}
+
+.hero-desc {
+  font-size:1rem;
+  color:var(--mid);
+  line-height:1.8;
+  max-width:440px;
+  font-weight:300;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-buttons{
+  display:flex;gap:1rem;
+  opacity:0;animation:fadeUp 0.8s 0.8s forwards;
+}
+
+.btn-primary{
+  padding:0.9rem 2.2rem;
+  background:linear-gradient(135deg,var(--plum),var(--deep-pink));
+  color:#fff;border:none;border-radius:50px;
+  font-size:0.85rem;font-weight:500;
+  cursor:pointer;transition:all 0.3s;
+  text-decoration:none;font-family:'DM Sans',sans-serif;
+  box-shadow:0 6px 24px rgba(123,63,94,0.3);
+  letter-spacing:0.3px;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(123,63,94,0.45);}
+
+.btn-ghost{
+  padding:0.9rem 2.2rem;
+  background:transparent;
+  color:var(--plum);
+  border:1.5px solid var(--pink);
+  border-radius:50px;
+  font-size:0.85rem;font-weight:500;
+  cursor:pointer;transition:all 0.3s;
+  text-decoration:none;font-family:'DM Sans',sans-serif;
+}
+.btn-ghost:hover{background:rgba(232,164,184,0.2);border-color:var(--plum);transform:translateY(-3px);}
+
+/* HERO RIGHT — Photo Collage */
+.hero-right {
+  position:relative;
+  height:580px;
+  opacity:0;animation:fadeIn 1.2s 0.6s forwards;
+}
+
+.hero-photo {
+  position:absolute;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 16px 48px rgba(42,31,46,0.18);
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-photo:hover{transform:translateY(-8px) scale(1.02);}
+
+.hp1{width:280px;height:360px;top:0;left:0;transform:rotate(-2deg);}
+.hp2{width:220px;height:270px;top:30px;right:0;transform:rotate(3deg);}
+.hp3{width:200px;height:220px;bottom:0;left:60px;transform:rotate(1.5deg);}
+.hp4{width:170px;height:190px;bottom:20px;right:30px;transform:rotate(-2.5deg);}
+
+.hero-badge {
+  position:absolute;
+  top:45%;right:-15px;
+  background:var(--paper);
+  border:1px solid rgba(200,160,175,0.4);
+  border-radius:14px;
+  padding:0.8rem 1rem;
+  text-align:center;
+  box-shadow:0 8px 24px rgba(42,31,46,0.12);
+  z-index:10;
+}
+.hero-badge .num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:700;
+  color:var(--plum);display:block;line-height:1;
+}
+.hero-badge .lbl{font-size:0.65rem;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ════════════ STATS ROW ════════════ */
+.stats-row {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  padding:3rem 5rem;
+  background:var(--blush);
+  border-top:1px solid rgba(200,160,175,0.25);
+  border-bottom:1px solid rgba(200,160,175,0.25);
+}
+.stat-box{text-align:center;padding:1.5rem;}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:700;
+  color:var(--plum);display:block;line-height:1;
+  margin-bottom:0.4rem;
+}
+.stat-label{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--mid);}
+
+/* ════════════ SECTION HEADERS ════════════ */
+.sec-eyebrow{
+  text-align:center;
+  font-size:0.68rem;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--pink);
+  margin-bottom:0.8rem;font-weight:500;
+}
+.sec-title{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:600;color:var(--ink);
+  margin-bottom:0.5rem;
+}
+.sec-title em{font-style:italic;color:var(--deep-pink);}
+.sec-sub{
+  text-align:center;
+  color:var(--mid);font-size:0.9rem;
+  font-weight:300;max-width:500px;
+  margin:0 auto 3.5rem;line-height:1.7;
+}
+
+/* ════════════ CITY TABS ════════════ */
+#explore{padding:5rem 3rem 0;max-width:1380px;margin:0 auto;}
+
+.city-tabs{
+  display:flex;justify-content:center;
+  flex-wrap:wrap;gap:0.7rem;margin-bottom:3.5rem;
+}
+.city-tab{
+  padding:0.65rem 1.7rem;
+  border-radius:50px;
+  border:1.5px solid rgba(200,160,175,0.4);
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(8px);
+  color:var(--mid);
+  font-size:0.82rem;font-weight:500;
+  cursor:pointer;transition:all 0.3s;
+  font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.city-tab:hover{border-color:var(--pink);background:rgba(232,164,184,0.15);color:var(--plum);}
+.city-tab.active{
+  background:linear-gradient(135deg,var(--plum),var(--deep-pink));
+  border-color:transparent;color:#fff;
+  box-shadow:0 6px 20px rgba(123,63,94,0.35);
+}
+
+/* ════════════ CITY PANEL ════════════ */
+.city-panel{display:none;}
+.city-panel.active{display:block;animation:panelIn 0.5s forwards;}
+
+@keyframes panelIn{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* City Banner */
+.city-banner{
+  position:relative;
+  height:340px;
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:3rem;
+  cursor:pointer;
+}
+.city-banner-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform 0.8s cubic-bezier(0.4,0,0.2,1);
+  display:block;
+}
+.city-banner:hover .city-banner-img{transform:scale(1.06);}
+
+.city-banner-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(42,31,46,0.88) 0%, rgba(42,31,46,0.3) 55%, transparent 100%);
+}
+.city-banner-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:2.5rem;
+  display:flex;align-items:flex-end;justify-content:space-between;
+}
+.city-banner-text{}
+.city-jp{
+  font-family:'Noto Serif JP',serif;
+  font-size:2.2rem;color:rgba(232,164,184,0.7);
+  display:block;font-weight:300;margin-bottom:0.2rem;
+}
+.city-banner-text h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:700;color:#fff;
+  line-height:1.05;margin-bottom:0.4rem;
+}
+.city-banner-text p{
+  color:rgba(255,255,255,0.7);font-size:0.88rem;
+  max-width:500px;line-height:1.6;font-weight:300;
+}
+.city-banner-pill{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:12px;
+  padding:1rem 1.4rem;
+  text-align:center;white-space:nowrap;
+}
+.city-banner-pill .pill-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:700;color:#fff;display:block;
+}
+.city-banner-pill .pill-lbl{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);}
+
+/* ════════════ SPOTS GRID ════════════ */
+.spots-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:2rem;margin-bottom:4rem;
+}
+
+/* ════════════ SPOT CARD ════════════ */
+.spot-card{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid rgba(200,160,175,0.2);
+  box-shadow:0 4px 24px rgba(42,31,46,0.07);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1),
+             box-shadow 0.4s;
+  cursor:pointer;
+}
+.spot-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 56px rgba(123,63,94,0.2);
+}
+
+/* PHOTO HOVER EFFECTS */
+.card-img-wrap{
+  position:relative;height:240px;overflow:hidden;
+}
+.card-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+  transition:transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  filter:saturate(0.9)brightness(0.97);
+}
+.spot-card:hover .card-img-wrap img{
+  transform:scale(1.1);
+  filter:saturate(1.1)brightness(1.02);
+}
+
+/* Overlay on hover */
+.card-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(123,63,94,0.7),rgba(196,96,122,0.5));
+  opacity:0;
+  transition:opacity 0.4s;
+  display:flex;align-items:center;justify-content:center;
+}
+.spot-card:hover .card-img-overlay{opacity:1;}
+
+.overlay-icon{
+  font-size:2.5rem;
+  transform:scale(0.5) rotate(-15deg);
+  opacity:0;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.spot-card:hover .overlay-icon{
+  transform:scale(1) rotate(0deg);opacity:1;
+}
+
+.overlay-text{
+  position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;
+  color:#fff;
+  transform:translateY(10px);opacity:0;
+  transition:all 0.4s 0.05s;
+}
+.spot-card:hover .overlay-text{transform:translateY(0);opacity:1;}
+.overlay-text span{font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;}
+
+/* Card badges */
+.card-badge-wrap{
+  position:absolute;top:1rem;
+  left:1rem;right:1rem;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:5;
+}
+.badge{
+  padding:0.3rem 0.8rem;
+  border-radius:50px;
+  font-size:0.65rem;letter-spacing:1.2px;text-transform:uppercase;
+  font-weight:500;
+}
+.badge-cat{
+  background:rgba(250,246,240,0.92);
+  color:var(--plum);border:1px solid rgba(200,160,175,0.4);
+}
+.badge-rating{
+  background:rgba(42,31,46,0.8);
+  color:var(--gold-light);
+  display:flex;align-items:center;gap:0.3rem;
+}
+
+/* Card Body */
+.card-body{padding:1.4rem 1.5rem 1.5rem;}
+
+.card-body h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-weight:700;
+  color:var(--ink);margin-bottom:0.15rem;
+  line-height:1.2;
+  transition:color 0.3s;
+}
+.spot-card:hover .card-body h3{color:var(--plum);}
+
+.card-loc{
+  font-size:0.72rem;color:var(--pink);
+  letter-spacing:1.5px;text-transform:uppercase;
+  font-weight:500;margin-bottom:0.8rem;
+  display:flex;align-items:center;gap:0.3rem;
+}
+
+.card-desc{
+  font-size:0.85rem;color:var(--charcoal);
+  line-height:1.75;margin-bottom:1rem;
+  font-weight:300;
+}
+
+.card-facts{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0.5rem;margin-bottom:1rem;
+  padding:0.8rem;
+  background:var(--blush);
+  border-radius:10px;
+}
+.card-fact{
+  font-size:0.75rem;color:var(--mid);
+  display:flex;align-items:center;gap:0.4rem;
+}
+.card-fact strong{color:var(--ink);}
+
+.card-divider{
+  height:1px;background:rgba(200,160,175,0.2);margin-bottom:1rem;
+}
+
+.card-actions{display:flex;gap:0.6rem;}
+.btn-sm{
+  flex:1;padding:0.6rem;border-radius:10px;
+  font-size:0.75rem;font-weight:500;
+  cursor:pointer;transition:all 0.25s;
+  border:none;font-family:'DM Sans',sans-serif;
+  text-align:center;
+}
+.btn-sm-primary{
+  background:linear-gradient(135deg,var(--plum),var(--deep-pink));
+  color:#fff;
+}
+.btn-sm-primary:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(123,63,94,0.35);}
+.btn-sm-outline{
+  background:transparent;
+  color:var(--plum);
+  border:1.5px solid rgba(200,160,175,0.5);
+}
+.btn-sm-outline:hover{background:rgba(232,164,184,0.15);border-color:var(--plum);}
+
+/* ════════════ QUICK INFO STRIP ════════════ */
+.quick-strip{
+  display:flex;flex-wrap:wrap;gap:1rem;
+  padding:1.5rem 2rem;
+  background:rgba(232,164,184,0.12);
+  border:1px solid rgba(200,160,175,0.25);
+  border-radius:16px;
+  margin-bottom:3rem;
+  align-items:center;
+}
+.quick-item{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.8rem;color:var(--mid);font-weight:400;
+}
+.quick-item strong{color:var(--plum);font-weight:500;}
+.quick-dot{color:rgba(200,160,175,0.5);font-size:1rem;}
+
+/* ════════════ MAP SECTION ════════════ */
+#map-section{
+  padding:6rem 3rem;
+  max-width:1380px;margin:0 auto;
+}
+.map-card{
+  border-radius:24px;overflow:hidden;
+  border:1px solid rgba(200,160,175,0.3);
+  box-shadow:0 12px 48px rgba(42,31,46,0.1);
+  position:relative;
+}
+.map-topbar{
+  background:var(--paper);
+  border-bottom:1px solid rgba(200,160,175,0.25);
+  padding:1.2rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.map-title-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;color:var(--plum);font-weight:600;
+}
+.map-pills{display:flex;gap:0.5rem;}
+.map-pill{
+  padding:0.3rem 0.9rem;border-radius:50px;
+  font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;
+  border:1px solid rgba(200,160,175,0.4);
+  color:var(--mid);background:rgba(255,255,255,0.6);
+  cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif;
+}
+.map-pill:hover,.map-pill.active{
+  background:var(--plum);color:#fff;border-color:var(--plum);
+}
+#japanMap{
+  width:100%;height:520px;border:none;display:block;
+}
+.map-legend-row{
+  background:var(--paper);
+  border-top:1px solid rgba(200,160,175,0.25);
+  padding:1.2rem 2rem;
+  display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;
+}
+.leg-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--mid);}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+
+/* ════════════ TRAVEL TIPS ════════════ */
+#tips{
+  padding:6rem 3rem;
+  max-width:1380px;margin:0 auto;
+}
+.tips-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1.5rem;
+}
+.tip-card{
+  background:#fff;
+  border:1px solid rgba(200,160,175,0.2);
+  border-radius:18px;
+  padding:2rem;
+  transition:all 0.35s;
+  box-shadow:0 2px 16px rgba(42,31,46,0.05);
+}
+.tip-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 36px rgba(123,63,94,0.14);
+  border-color:rgba(200,160,175,0.4);
+}
+.tip-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+.tip-card h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-weight:700;
+  color:var(--ink);margin-bottom:0.6rem;
+}
+.tip-card p{font-size:0.83rem;color:var(--mid);line-height:1.75;font-weight:300;}
+.tip-tag{
+  display:inline-block;
+  margin-top:0.8rem;
+  padding:0.25rem 0.7rem;
+  border-radius:50px;font-size:0.65rem;
+  letter-spacing:1px;text-transform:uppercase;
+  background:rgba(232,164,184,0.2);color:var(--deep-pink);
+  border:1px solid rgba(232,164,184,0.4);
+}
+
+/* ════════════ BEST TIME SECTION ════════════ */
+#seasons{
+  padding:5rem 3rem;
+  background:var(--blush);
+  border-top:1px solid rgba(200,160,175,0.25);
+  border-bottom:1px solid rgba(200,160,175,0.25);
+}
+.seasons-inner{max-width:1380px;margin:0 auto;}
+.seasons-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;margin-top:3rem;
+}
+.season-card{
+  background:#fff;border-radius:18px;
+  padding:1.8rem;text-align:center;
+  border:1px solid rgba(200,160,175,0.2);
+  transition:all 0.3s;
+  box-shadow:0 2px 12px rgba(42,31,46,0.05);
+}
+.season-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(123,63,94,0.12);}
+.season-card .s-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+.season-card h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:0.4rem;
+}
+.season-card .s-months{
+  font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--pink);margin-bottom:0.6rem;font-weight:500;
+}
+.season-card p{font-size:0.8rem;color:var(--mid);line-height:1.7;font-weight:300;}
+.s-highlight{
+  margin-top:0.7rem;
+  display:inline-block;padding:0.2rem 0.7rem;
+  border-radius:50px;font-size:0.65rem;font-weight:500;
+  background:rgba(143,175,143,0.2);color:var(--sage);
+  border:1px solid rgba(143,175,143,0.35);
+}
+
+/* ════════════ FOOD SECTION ════════════ */
+#food{
+  padding:6rem 3rem;
+  max-width:1380px;margin:0 auto;
+}
+.food-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:1.5rem;
+}
+.food-card{
+  border-radius:18px;overflow:hidden;
+  background:#fff;
+  border:1px solid rgba(200,160,175,0.2);
+  box-shadow:0 2px 16px rgba(42,31,46,0.06);
+  transition:all 0.35s;
+}
+.food-card:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(123,63,94,0.15);}
+.food-img-wrap{position:relative;height:180px;overflow:hidden;}
+.food-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.4s;
+}
+.food-card:hover .food-img-wrap img{transform:scale(1.08);filter:brightness(1.05)saturation(1.1);}
+.food-img-overlay{
+  position:absolute;inset:0;
+  background:rgba(123,63,94,0.5);
+  opacity:0;transition:opacity 0.35s;
+  display:flex;align-items:center;justify-content:center;
+}
+.food-img-overlay span{font-size:2rem;transform:scale(0);transition:transform 0.3s 0.05s;}
+.food-card:hover .food-img-overlay{opacity:1;}
+.food-card:hover .food-img-overlay span{transform:scale(1);}
+.food-body{padding:1rem 1.2rem 1.3rem;}
+.food-body h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:0.3rem;
+}
+.food-body p{font-size:0.78rem;color:var(--mid);line-height:1.65;font-weight:300;}
+.food-city{font-size:0.65rem;color:var(--pink);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:0.3rem;}
+
+/* ════════════ FOOTER ════════════ */
+footer{
+  background:var(--ink);
+  padding:4rem 5rem 2rem;
+  color:rgba(255,255,255,0.7);
+}
+.footer-top{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;margin-bottom:3rem;
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;color:#fff;
+  margin-bottom:0.8rem;
+}
+.footer-logo-jp{
+  font-family:'Noto Serif JP',serif;
+  font-size:0.9rem;color:rgba(232,164,184,0.5);
+  font-weight:300;display:block;letter-spacing:3px;margin-bottom:0.8rem;
+}
+.footer-about{font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.45);}
+.footer-col h5{
+  font-size:0.7rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(232,164,184,0.7);margin-bottom:1rem;font-weight:500;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+.footer-links a{
+  font-size:0.83rem;color:rgba(255,255,255,0.5);text-decoration:none;
+  transition:color 0.25s;
+}
+.footer-links a:hover{color:var(--pink);}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:1.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-note{font-size:0.75rem;color:rgba(255,255,255,0.3);}
+
+/* ════════════ MODAL ════════════ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(42,31,46,0.75);
+  backdrop-filter:blur(10px);
+  z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.35s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--paper);
+  border-radius:24px;
+  max-width:700px;width:92%;
+  overflow:hidden;
+  transform:scale(0.9) translateY(20px);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  max-height:90vh;overflow-y:auto;
+  position:relative;
+}
+.modal-overlay.open .modal{transform:scale(1) translateY(0);}
+.modal-img{width:100%;height:290px;object-fit:cover;display:block;}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(42,31,46,0.7);
+  border:none;color:#fff;font-size:1rem;
+  cursor:pointer;transition:all 0.25s;
+  display:flex;align-items:center;justify-content:center;
+  z-index:10;
+}
+.modal-close:hover{background:var(--deep-pink);transform:rotate(90deg);}
+.modal-body{padding:2rem;}
+.modal-cat{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:0.5rem;font-weight:500;}
+.modal-body h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.9rem;font-weight:700;color:var(--ink);margin-bottom:0.3rem;
+}
+.modal-body .modal-jp{
+  font-family:'Noto Serif JP',serif;
+  font-size:1.1rem;color:var(--pink);font-weight:300;
+  display:block;margin-bottom:1rem;letter-spacing:0.2em;
+}
+.modal-body p{font-size:0.88rem;color:var(--charcoal);line-height:1.85;margin-bottom:1rem;font-weight:300;}
+.modal-facts{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;
+  margin-top:1.2rem;padding:1.2rem;
+  background:var(--blush);border-radius:12px;
+}
+.modal-fact{font-size:0.8rem;color:var(--mid);display:flex;align-items:center;gap:0.4rem;}
+.modal-fact strong{color:var(--plum);}
+
+/* ════════════ REVEAL ANIMATION ════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:all 0.7s cubic-bezier(0.4,0,0.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+/* ════════════ RESPONSIVE ════════════ */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:7rem 2rem 3rem;text-align:center;}
+  .hero-right{display:none;}
+  .stats-row{grid-template-columns:repeat(2,1fr);padding:2rem;}
+  .seasons-grid{grid-template-columns:repeat(2,1fr);}
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  footer,.footer-top{padding:2rem;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo">
+    桜 Sakura Trails
+    <span class="logo-kanji">日本の旅</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#seasons">Seasons</a></li>
+    <li><a href="#food">Cuisine</a></li>
+    <li><a href="#map-section">Map</a></li>
+    <li><a href="#tips">Tips</a></li>
+  </ul>
+  <a href="#explore" class="btn-nav">Begin Journey →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-kamon">桜</div>
+    <span class="hero-tag">🌸 Japan Travel Guide 2025</span>
+    <span class="hero-title-jp">日本の美しい場所へようこそ</span>
+    <h1 class="hero-title">
+      Discover<br>
+      <em>Timeless</em><br>
+      Japan
+    </h1>
+    <p class="hero-desc">From neon-drenched Tokyo streets to mist-wrapped Kyoto temples — explore Japan's five most iconic cities and their most breathtaking spots, lovingly curated for the thoughtful traveller.</p>
+    <div class="hero-buttons">
+      <a href="#explore" class="btn-primary">Explore Cities</a>
+      <a href="#map-section" class="btn-ghost">View Map</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo hp1">
+      <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600&q=90" alt="Senso-ji Temple">
+    </div>
+    <div class="hero-photo hp2">
+      <img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=500&q=90" alt="Fushimi Inari">
+    </div>
+    <div class="hero-photo hp3">
+      <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=90" alt="Bamboo Grove">
+    </div>
+    <div class="hero-photo hp4">
+      <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=400&q=90" alt="Ueno Park">
+    </div>
+    <div class="hero-badge">
+      <span class="num">5</span>
+      <span class="lbl">Cities</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row reveal">
+  <div class="stat-box">
+    <span class="stat-num" data-target="5">0</span>
+    <div class="stat-label">Iconic Cities</div>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num" data-target="25">0</span>
+    <div class="stat-label">Curated Spots</div>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num" data-target="47">0</span>
+    <div class="stat-label">Prefectures</div>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">∞</span>
+    <div class="stat-label">Memories Await</div>
+  </div>
+</div>
+
+<!-- EXPLORE SECTION -->
+<section style="padding:6rem 3rem 0;max-width:1380px;margin:0 auto;" id="explore-wrap">
+  <p class="sec-eyebrow reveal">✦ Five Cities ✦</p>
+  <h2 class="sec-title reveal">Choose Your <em>Destination</em></h2>
+  <p class="sec-sub reveal">Each city carries a unique soul — ancient capitals, modern megacities, sacred islands. Tap a city to discover its finest hidden and iconic spots.</p>
+
+  <div class="city-tabs">
+    <button class="city-tab active" onclick="showCity('tokyo',this)">🗼 Tokyo</button>
+    <button class="city-tab" onclick="showCity('kyoto',this)">⛩️ Kyoto</button>
+    <button class="city-tab" onclick="showCity('osaka',this)">🏯 Osaka</button>
+    <button class="city-tab" onclick="showCity('hiroshima',this)">🕊️ Hiroshima</button>
+    <button class="city-tab" onclick="showCity('nara',this)">🦌 Nara</button>
+  </div>
+
+  <!-- TOKYO -->
+  <div class="city-panel active" id="panel-tokyo">
+    <div class="city-banner">
+      <img class="city-banner-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1400&q=90" alt="Tokyo">
+      <div class="city-banner-overlay"></div>
+      <div class="city-banner-info">
+        <div class="city-banner-text">
+          <span class="city-jp">東京</span>
+          <h2>Tokyo</h2>
+          <p>Japan's electric heart — a city where ancient shrines share streets with soaring skyscrapers, and every neighbourhood is a world unto itself.</p>
+        </div>
+        <div class="city-banner-pill">
+          <span class="pill-num">5</span>
+          <span class="pill-lbl">Top Spots</span>
+        </div>
+      </div>
+    </div>
+    <div class="quick-strip">
+      <div class="quick-item">🌡️ <strong>Best Time:</strong> Mar–May, Oct–Nov</div><span class="quick-dot">·</span>
+      <div class="quick-item">✈️ <strong>Airport:</strong> Narita / Haneda</div><span class="quick-dot">·</span>
+      <div class="quick-item">🚇 <strong>Transport:</strong> JR + Tokyo Metro</div><span class="quick-dot">·</span>
+      <div class="quick-item">💴 <strong>Currency:</strong> Japanese Yen (¥)</div><span class="quick-dot">·</span>
+      <div class="quick-item">🗣️ <strong>Language:</strong> Japanese</div>
+    </div>
+    <div class="spots-grid">
+
+      <div class="spot-card" onclick="openModal('shibuya')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=700&q=88" alt="Shibuya Crossing">
+          <div class="card-img-overlay">
+            <div>
+              <div class="overlay-icon">🚶</div>
+              <div class="overlay-text"><span>Click to Explore</span></div>
+            </div>
+          </div>
+          <div class="card-badge-wrap">
+            <span class="badge badge-cat">📍 Landmark</span>
+            <span class="badge badge-rating">⭐ 4.8</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3>Shibuya Crossing</h3>
+          <div class="card-loc">📌 Shibuya, Tokyo</div>
+          <p class="card-desc">The world's busiest pedestrian crossing — where thousands converge from every direction the moment lights turn red. A neon-lit spectacle that defines modern Tokyo's relentless, beautiful energy.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Open 24/7</strong></div>
+            <div class="card-fact">🚇 <strong>Shibuya Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free Entry</strong></div>
+            <div class="card-fact">⏱️ <strong>30–60 min</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions">
+            <button class="btn-sm btn-sm-primary">Explore</button>
+            <button class="btn-sm btn-sm-outline">📌 Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card" onclick="openModal('sensoji')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=700&q=88" alt="Senso-ji Temple">
+          <div class="card-img-overlay">
+            <div>
+              <div class="overlay-icon">🏛️</div>
+              <div class="overlay-text"><span>Click to Explore</span></div>
+            </div>
+          </div>
+          <div class="card-badge-wrap">
+            <span class="badge badge-cat">🏛️ Temple</span>
+            <span class="badge badge-rating">⭐ 4.9</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3>Senso-ji Temple</h3>
+          <div class="card-loc">📌 Asakusa, Tokyo</div>
+          <p class="card-desc">Tokyo's oldest Buddhist temple welcomes visitors through the legendary Kaminarimon gate. Incense-filled air, golden altars, and the historic Nakamise shopping lane create an unforgettable spiritual atmosphere.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>6am–5pm</strong></div>
+            <div class="card-fact">🚇 <strong>Asakusa Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free Entry</strong></div>
+            <div class="card-fact">⏱️ <strong>1–2 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions">
+            <button class="btn-sm btn-sm-primary">Explore</button>
+            <button class="btn-sm btn-sm-outline">📌 Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=700&q=88" alt="Golden Gai">
+          <div class="card-img-overlay">
+            <div>
+              <div class="overlay-icon">🍶</div>
+              <div class="overlay-text"><span>Hover to Preview</span></div>
+            </div>
+          </div>
+          <div class="card-badge-wrap">
+            <span class="badge badge-cat">🌃 Nightlife</span>
+            <span class="badge badge-rating">⭐ 4.7</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3>Shinjuku Golden Gai</h3>
+          <div class="card-loc">📌 Shinjuku, Tokyo</div>
+          <p class="card-desc">Over 200 tiny bars crammed into labyrinthine alleyways — each seating just 5 to 8 people. Tokyo's most atmospheric drinking neighbourhood, where creatives and locals bond over craft drinks under warm neon signs.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Eve–Late Night</strong></div>
+            <div class="card-fact">🚇 <strong>Shinjuku Stn</strong></div>
+            <div class="card-fact">💰 <strong>From ¥600</strong></div>
+            <div class="card-fact">⏱️ <strong>2–4 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions">
+            <button class="btn-sm btn-sm-primary">Explore</button>
+            <button class="btn-sm btn-sm-outline">📌 Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=700&q=88" alt="Akihabara">
+          <div class="card-img-overlay">
+            <div>
+              <div class="overlay-icon">🎮</div>
+              <div class="overlay-text"><span>Hover to Preview</span></div>
+            </div>
+          </div>
+          <div class="card-badge-wrap">
+            <span class="badge badge-cat">🎮 Tech Hub</span>
+            <span class="badge badge-rating">⭐ 4.6</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3>Akihabara</h3>
+          <div class="card-loc">📌 Chiyoda, Tokyo</div>
+          <p class="card-desc">Electric Town blazes with LED signs, multi-storey anime shops, retro arcades, and maid cafés. A paradise for tech and culture lovers — the global epicentre of Japanese pop culture that must be seen in person.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>10am–9pm</strong></div>
+            <div class="card-fact">🚇 <strong>Akihabara Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free to Browse</strong></div>
+            <div class="card-fact">⏱️ <strong>2–5 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions">
+            <button class="btn-sm btn-sm-primary">Explore</button>
+            <button class="btn-sm btn-sm-outline">📌 Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=700&q=88" alt="Ueno Park">
+          <div class="card-img-overlay">
+            <div>
+              <div class="overlay-icon">🌸</div>
+              <div class="overlay-text"><span>Hover to Preview</span></div>
+            </div>
+          </div>
+          <div class="card-badge-wrap">
+            <span class="badge badge-cat">🌸 Park</span>
+            <span class="badge badge-rating">⭐ 4.8</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3>Ueno Park</h3>
+          <div class="card-loc">📌 Taitō, Tokyo</div>
+          <p class="card-desc">Tokyo's most beloved public green space — home to Japan's oldest zoo, world-class museums, and Shinobazu Pond. During cherry blossom season the park transforms into a pink wonderland with thousands picnicking beneath the canopy.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Open Daily</strong></div>
+            <div class="card-fact">🚇 <strong>Ueno Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free (park)</strong></div>
+            <div class="card-fact">⏱️ <strong>2–4 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions">
+            <button class="btn-sm btn-sm-primary">Explore</button>
+            <button class="btn-sm btn-sm-outline">📌 Save</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KYOTO -->
+  <div class="city-panel" id="panel-kyoto">
+    <div class="city-banner">
+      <img class="city-banner-img" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1400&q=90" alt="Kyoto">
+      <div class="city-banner-overlay"></div>
+      <div class="city-banner-info">
+        <div class="city-banner-text">
+          <span class="city-jp">京都</span>
+          <h2>Kyoto</h2>
+          <p>Japan's soul — an ancient imperial capital of temple-studded hills, geisha districts, bamboo groves, and centuries of living culture.</p>
+        </div>
+        <div class="city-banner-pill">
+          <span class="pill-num">5</span>
+          <span class="pill-lbl">Top Spots</span>
+        </div>
+      </div>
+    </div>
+    <div class="quick-strip">
+      <div class="quick-item">🌡️ <strong>Best Time:</strong> Mar–May, Nov</div><span class="quick-dot">·</span>
+      <div class="quick-item">✈️ <strong>Nearest Airport:</strong> Kansai / Itami</div><span class="quick-dot">·</span>
+      <div class="quick-item">🚅 <strong>From Tokyo:</strong> 2h15m Shinkansen</div><span class="quick-dot">·</span>
+      <div class="quick-item">🎭 <strong>Famous For:</strong> Geisha, Temples, Tea</div>
+    </div>
+    <div class="spots-grid">
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=700&q=88" alt="Fushimi Inari">
+          <div class="card-img-overlay"><div><div class="overlay-icon">⛩️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div>
+          <div class="card-badge-wrap"><span class="badge badge-cat">⛩️ Shrine</span><span class="badge badge-rating">⭐ 4.9</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Fushimi Inari Shrine</h3>
+          <div class="card-loc">📌 Fushimi Ward, Kyoto</div>
+          <p class="card-desc">Thousands of brilliant vermilion torii gates snake 4 km up sacred Mount Inari. Dedicated to the Shinto god of rice, fox statues guard every path. Dawn visits are magical when mist threads through the gates like silk.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Open 24/7</strong></div><div class="card-fact">🚇 <strong>Inari Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free Entry</strong></div><div class="card-fact">⏱️ <strong>2–4 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=700&q=88" alt="Arashiyama">
+          <div class="card-img-overlay"><div><div class="overlay-icon">🎋</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div>
+          <div class="card-badge-wrap"><span class="badge badge-cat">🎋 Nature</span><span class="badge badge-rating">⭐ 4.8</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Arashiyama Bamboo Grove</h3>
+          <div class="card-loc">📌 Arashiyama, Kyoto</div>
+          <p class="card-desc">Soaring stalks 30 metres high create an emerald cathedral that filters sunlight into dappled green wonder. The rustling of this grove is one of Japan's 100 Soundscapes to Preserve — an experience felt as much as seen.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Open Daily</strong></div><div class="card-fact">🚇 <strong>Arashiyama Stn</strong></div>
+            <div class="card-fact">💰 <strong>Free Entry</strong></div><div class="card-fact">⏱️ <strong>1–3 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=88" alt="Kinkaku-ji">
+          <div class="card-img-overlay"><div><div class="overlay-icon">✨</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div>
+          <div class="card-badge-wrap"><span class="badge badge-cat">🏛️ Temple</span><span class="badge badge-rating">⭐ 4.9</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Kinkaku-ji (Golden Pavilion)</h3>
+          <div class="card-loc">📌 Kita Ward, Kyoto</div>
+          <p class="card-desc">Real gold leaf sheaths every surface of this three-storey Zen temple, which mirrors perfectly in the still Kyoko-chi pond. Originally a shogun's retreat from 1397, it's been rebuilt to absolute perfection after a 1950 fire.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>9am–5pm</strong></div><div class="card-fact">🚌 <strong>Bus 101/205</strong></div>
+            <div class="card-fact">💰 <strong>¥500</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=700&q=88" alt="Gion">
+          <div class="card-img-overlay"><div><div class="overlay-icon">🎎</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div>
+          <div class="card-badge-wrap"><span class="badge badge-cat">🎎 Culture</span><span class="badge badge-rating">⭐ 4.8</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Gion District</h3>
+          <div class="card-loc">📌 Higashiyama, Kyoto</div>
+          <p class="card-desc">Kyoto's most celebrated geisha district — lantern-lit stone lanes, preserved wooden teahouses, and the thrill of spotting a maiko in full silk kimono at dusk on Hanamikoji Street. Living tradition at its most beautiful.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>All Day</strong></div><div class="card-fact">🚌 <strong>Gion Bus Stop</strong></div>
+            <div class="card-fact">💰 <strong>Free to Walk</strong></div><div class="card-fact">⏱️ <strong>1–3 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1564594985645-4427056e22e2?w=700&q=88" alt="Philosopher's Path">
+          <div class="card-img-overlay"><div><div class="overlay-icon">🌺</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div>
+          <div class="card-badge-wrap"><span class="badge badge-cat">🌸 Scenic Walk</span><span class="badge badge-rating">⭐ 4.7</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Philosopher's Path</h3>
+          <div class="card-loc">📌 Sakyo Ward, Kyoto</div>
+          <p class="card-desc">This 2 km canal-side walk, named after philosopher Nishida Kitaro, is Japan's most romantic spring walkway — hundreds of cherry trees shed petals onto dark water. Hidden cafés, galleries and shrines line every turn.</p>
+          <div class="card-facts">
+            <div class="card-fact">⏰ <strong>Open Daily</strong></div><div class="card-fact">🚌 <strong>Ginkakuji-michi</strong></div>
+            <div class="card-fact">💰 <strong>Free</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OSAKA -->
+  <div class="city-panel" id="panel-osaka">
+    <div class="city-banner">
+      <img class="city-banner-img" src="https://images.unsplash.com/photo-1589452271712-64b8a66c7b71?w=1400&q=90" alt="Osaka">
+      <div class="city-banner-overlay"></div>
+      <div class="city-banner-info">
+        <div class="city-banner-text">
+          <span class="city-jp">大阪</span>
+          <h2>Osaka</h2>
+          <p>Japan's kitchen and comedy capital — where street food is religion, a medieval castle rules the skyline, and neon nightlife never sleeps.</p>
+        </div>
+        <div class="city-banner-pill"><span class="pill-num">5</span><span class="pill-lbl">Top Spots</span></div>
+      </div>
+    </div>
+    <div class="quick-strip">
+      <div class="quick-item">🌡️ <strong>Best Time:</strong> Mar–May, Oct–Nov</div><span class="quick-dot">·</span>
+      <div class="quick-item">✈️ <strong>Airport:</strong> Kansai International</div><span class="quick-dot">·</span>
+      <div class="quick-item">🍢 <strong>Must Eat:</strong> Takoyaki, Okonomiyaki</div><span class="quick-dot">·</span>
+      <div class="quick-item">🗣️ <strong>Known For:</strong> Friendly, Funny Locals</div>
+    </div>
+    <div class="spots-grid">
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1563189149-c83aea965b78?w=700&q=88" alt="Osaka Castle"><div class="card-img-overlay"><div><div class="overlay-icon">🏯</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏯 Castle</span><span class="badge badge-rating">⭐ 4.7</span></div></div><div class="card-body"><h3>Osaka Castle</h3><div class="card-loc">📌 Chuo Ward, Osaka</div><p class="card-desc">Toyotomi Hideyoshi's legendary castle from 1583 towers over granite walls and moats filled with cherry trees. Inside eight floors of museum trace samurai history, while rooftop views stretch across the entire city delta.</p><div class="card-facts"><div class="card-fact">⏰ <strong>9am–5pm</strong></div><div class="card-fact">🚇 <strong>Osakajokoen Stn</strong></div><div class="card-fact">💰 <strong>¥600</strong></div><div class="card-fact">⏱️ <strong>2–3 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=700&q=88" alt="Dotonbori"><div class="card-img-overlay"><div><div class="overlay-icon">🦑</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🦑 Street Food</span><span class="badge badge-rating">⭐ 4.8</span></div></div><div class="card-body"><h3>Dotonbori</h3><div class="card-loc">📌 Namba, Osaka</div><p class="card-desc">Neon reflections on dark canal water, the sizzle of takoyaki on open teppan grills, the iconic Glico running man overhead — Dotonbori is Osaka's most electric entertainment strip, open and brilliant until the small hours.</p><div class="card-facts"><div class="card-fact">⏰ <strong>All Day/Night</strong></div><div class="card-fact">🚇 <strong>Namba Stn</strong></div><div class="card-fact">💰 <strong>Free (food extra)</strong></div><div class="card-fact">⏱️ <strong>2–4 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1574236170880-39ff40c786e4?w=700&q=88" alt="Umeda"><div class="card-img-overlay"><div><div class="overlay-icon">🏙️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏙️ Skyline</span><span class="badge badge-rating">⭐ 4.6</span></div></div><div class="card-body"><h3>Umeda Sky Building</h3><div class="card-loc">📌 Kita Ward, Osaka</div><p class="card-desc">Two towers joined 173 metres above the city by a breathtaking floating garden observatory. Escalators pass through mid-air between the towers — a theatrical experience before the 360° panoramic rooftop views reward you spectacularly.</p><div class="card-facts"><div class="card-fact">⏰ <strong>9:30am–10:30pm</strong></div><div class="card-fact">🚇 <strong>Osaka Stn</strong></div><div class="card-fact">💰 <strong>¥1,500</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1600861194942-f883de0dfe96?w=700&q=88" alt="Shinsekai"><div class="card-img-overlay"><div><div class="overlay-icon">🍢</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🍢 Retro</span><span class="badge badge-rating">⭐ 4.5</span></div></div><div class="card-body"><h3>Shinsekai District</h3><div class="card-loc">📌 Naniwa Ward, Osaka</div><p class="card-desc">Built in 1912 as a futuristic utopia inspired by New York and Paris, Shinsekai is now Osaka's gloriously retro neighbourhood — blowfish lanterns, kushikatsu restaurants, and pachinko parlours beneath the Tsutenkaku Tower.</p><div class="card-facts"><div class="card-fact">⏰ <strong>All Day</strong></div><div class="card-fact">🚇 <strong>Shin-Imamiya Stn</strong></div><div class="card-fact">💰 <strong>Free to Explore</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1536599524557-5f784dd53282?w=700&q=88" alt="Namba"><div class="card-img-overlay"><div><div class="overlay-icon">🛍️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🛍️ Shopping</span><span class="badge badge-rating">⭐ 4.7</span></div></div><div class="card-body"><h3>Namba Shopping District</h3><div class="card-loc">📌 Namba, Osaka</div><p class="card-desc">Osaka's most energetic hub spans covered arcades, department stores, and pop-culture boutiques. The historic Hozenji Yokocho alley and Kuromon Ichiba market — 170 years old and beloved by chefs — sit within easy walking distance.</p><div class="card-facts"><div class="card-fact">⏰ <strong>10am–10pm</strong></div><div class="card-fact">🚇 <strong>Namba Stn</strong></div><div class="card-fact">💰 <strong>Free to Browse</strong></div><div class="card-fact">⏱️ <strong>2–4 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- HIROSHIMA -->
+  <div class="city-panel" id="panel-hiroshima">
+    <div class="city-banner">
+      <img class="city-banner-img" src="https://images.unsplash.com/photo-1559561853-08451507cbe7?w=1400&q=90" alt="Hiroshima">
+      <div class="city-banner-overlay"></div>
+      <div class="city-banner-info">
+        <div class="city-banner-text">
+          <span class="city-jp">広島</span>
+          <h2>Hiroshima</h2>
+          <p>A city reborn from profound tragedy into the world's most powerful symbol of peace, resilience, and hope for humanity.</p>
+        </div>
+        <div class="city-banner-pill"><span class="pill-num">5</span><span class="pill-lbl">Top Spots</span></div>
+      </div>
+    </div>
+    <div class="quick-strip">
+      <div class="quick-item">🌡️ <strong>Best Time:</strong> Apr–May, Oct</div><span class="quick-dot">·</span>
+      <div class="quick-item">🚅 <strong>From Kyoto:</strong> 1h30m Shinkansen</div><span class="quick-dot">·</span>
+      <div class="quick-item">🍽️ <strong>Must Eat:</strong> Hiroshima Okonomiyaki</div><span class="quick-dot">·</span>
+      <div class="quick-item">⛴️ <strong>Day Trip:</strong> Miyajima Island</div>
+    </div>
+    <div class="spots-grid">
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1567416661576-659c0f4879d8?w=700&q=88" alt="Peace Memorial"><div class="card-img-overlay"><div><div class="overlay-icon">🕊️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🕊️ Memorial</span><span class="badge badge-rating">⭐ 4.9</span></div></div><div class="card-body"><h3>Peace Memorial Park</h3><div class="card-loc">📌 Naka Ward, Hiroshima</div><p class="card-desc">This profound park stands where the city's centre stood before August 6, 1945. The A-Bomb Dome — a UNESCO World Heritage Site — rises as a haunting witness. Thousands of paper cranes at the Children's Monument embody the prayer for peace.</p><div class="card-facts"><div class="card-fact">⏰ <strong>Open Daily</strong></div><div class="card-fact">🚌 <strong>Tram Stop 8</strong></div><div class="card-fact">💰 <strong>Free (Museum ¥200)</strong></div><div class="card-fact">⏱️ <strong>2–4 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=700&q=88" alt="Miyajima"><div class="card-img-overlay"><div><div class="overlay-icon">🏝️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏝️ Island</span><span class="badge badge-rating">⭐ 4.9</span></div></div><div class="card-body"><h3>Miyajima Island</h3><div class="card-loc">📌 Hatsukaichi, Hiroshima</div><p class="card-desc">Sacred Miyajima's floating O-Torii gate at high tide is one of Japan's most iconic images. Deer roam freely beside Itsukushima Shrine, while the forested mountain, five-storey pagoda, and fresh oyster stalls create a perfect island day.</p><div class="card-facts"><div class="card-fact">⏰ <strong>Open Daily</strong></div><div class="card-fact">⛴️ <strong>JR Ferry</strong></div><div class="card-fact">💰 <strong>Ferry ¥200</strong></div><div class="card-fact">⏱️ <strong>Half–Full Day</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?w=700&q=88" alt="Hiroshima Castle"><div class="card-img-overlay"><div><div class="overlay-icon">🏯</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏯 Castle</span><span class="badge badge-rating">⭐ 4.5</span></div></div><div class="card-body"><h3>Hiroshima Castle</h3><div class="card-loc">📌 Naka Ward, Hiroshima</div><p class="card-desc">Nicknamed Carp Castle, this gleaming white keep has been faithfully rebuilt and houses a museum of feudal samurai life. The moat gardens glow pink with cherry blossoms each spring, and the city's story of destruction and rebirth feels deeply personal from its walls.</p><div class="card-facts"><div class="card-fact">⏰ <strong>9am–6pm</strong></div><div class="card-fact">🚌 <strong>Tram Stop 9</strong></div><div class="card-fact">💰 <strong>¥370</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=700&q=88" alt="Shukkei-en"><div class="card-img-overlay"><div><div class="overlay-icon">🌿</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🌿 Garden</span><span class="badge badge-rating">⭐ 4.4</span></div></div><div class="card-body"><h3>Shukkei-en Garden</h3><div class="card-loc">📌 Naka Ward, Hiroshima</div><p class="card-desc">Created in 1620, Hiroshima's oldest garden survived partial damage in 1945 and was lovingly restored. Winding ponds, stone bridges, tea pavilions, and sculpted miniature landscapes shift dramatically through every season in breathtaking beauty.</p><div class="card-facts"><div class="card-fact">⏰ <strong>9am–6pm</strong></div><div class="card-fact">🚌 <strong>Tram Stop 9</strong></div><div class="card-fact">💰 <strong>¥260</strong></div><div class="card-fact">⏱️ <strong>45–90 min</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?w=700&q=88" alt="Okonomimura"><div class="card-img-overlay"><div><div class="overlay-icon">🥘</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🥘 Food Village</span><span class="badge badge-rating">⭐ 4.6</span></div></div><div class="card-body"><h3>Okonomimura Food Village</h3><div class="card-loc">📌 Naka Ward, Hiroshima</div><p class="card-desc">Five floors, 24 restaurants, one glorious dish. Hiroshima-style okonomiyaki — layered noodles, cabbage, egg, pork, cooked to a crispy masterwork on open teppan grills — served while you watch skilled chefs build it before your eyes.</p><div class="card-facts"><div class="card-fact">⏰ <strong>11am–11pm</strong></div><div class="card-fact">🚌 <strong>Hatchobori Stop</strong></div><div class="card-fact">💰 <strong>¥800–1,200</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- NARA -->
+  <div class="city-panel" id="panel-nara">
+    <div class="city-banner">
+      <img class="city-banner-img" src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=1400&q=90" alt="Nara">
+      <div class="city-banner-overlay"></div>
+      <div class="city-banner-info">
+        <div class="city-banner-text">
+          <span class="city-jp">奈良</span>
+          <h2>Nara</h2>
+          <p>Japan's ancient first capital — where 1,200 sacred deer roam free beside world-class Buddhist temples and 1,400-year-old pagodas.</p>
+        </div>
+        <div class="city-banner-pill"><span class="pill-num">5</span><span class="pill-lbl">Top Spots</span></div>
+      </div>
+    </div>
+    <div class="quick-strip">
+      <div class="quick-item">🌡️ <strong>Best Time:</strong> Mar–May, Oct–Nov</div><span class="quick-dot">·</span>
+      <div class="quick-item">🚅 <strong>From Kyoto:</strong> 45 min by train</div><span class="quick-dot">·</span>
+      <div class="quick-item">🦌 <strong>Famous For:</strong> Free-roaming Sacred Deer</div><span class="quick-dot">·</span>
+      <div class="quick-item">🏛️ <strong>UNESCO:</strong> 8 Sites in Nara</div>
+    </div>
+    <div class="spots-grid">
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=700&q=88" alt="Todai-ji"><div class="card-img-overlay"><div><div class="overlay-icon">🙏</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏛️ Temple</span><span class="badge badge-rating">⭐ 4.9</span></div></div><div class="card-body"><h3>Tōdai-ji Temple</h3><div class="card-loc">📌 Zoshi-cho, Nara</div><p class="card-desc">The world's largest wooden building houses Japan's greatest bronze Buddha — a 15-metre Daibutsu whose serene gaze fills the cavernous hall. Built in 752 CE with the labour of two million people, it remains the most awe-inspiring structure in Japan.</p><div class="card-facts"><div class="card-fact">⏰ <strong>7:30am–5:30pm</strong></div><div class="card-fact">🚌 <strong>Todaiji Bus</strong></div><div class="card-fact">💰 <strong>¥600</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=700&q=88" alt="Nara Park"><div class="card-img-overlay"><div><div class="overlay-icon">🦌</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🦌 Wildlife</span><span class="badge badge-rating">⭐ 4.9</span></div></div><div class="card-body"><h3>Nara Deer Park</h3><div class="card-loc">📌 Nara City Centre</div><p class="card-desc">Over 1,200 wild sika deer — considered divine messengers of the gods — roam completely free through the city park. They have mastered a charming bow to request shika senbei crackers from visitors, creating scenes of pure joy found nowhere else.</p><div class="card-facts"><div class="card-fact">⏰ <strong>Open Daily</strong></div><div class="card-fact">🚌 <strong>Nara Park Bus</strong></div><div class="card-fact">💰 <strong>Free (snacks ¥200)</strong></div><div class="card-fact">⏱️ <strong>2–3 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=700&q=88" alt="Kasuga Shrine"><div class="card-img-overlay"><div><div class="overlay-icon">🏮</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">⛩️ Shrine</span><span class="badge badge-rating">⭐ 4.8</span></div></div><div class="card-body"><h3>Kasuga Grand Shrine</h3><div class="card-loc">📌 Kasugacho, Nara</div><p class="card-desc">Founded in 768 CE, Kasuga Grand Shrine glows with over 3,000 bronze and stone lanterns donated across the centuries. During the twice-yearly Lantern Festivals, every lantern is lit simultaneously, transforming the ancient forest shrine into pure golden dreamland.</p><div class="card-facts"><div class="card-fact">⏰ <strong>6am–6pm</strong></div><div class="card-fact">🚌 <strong>Kasugataisha Bus</strong></div><div class="card-fact">💰 <strong>¥500</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=700&q=88" alt="Naramachi"><div class="card-img-overlay"><div><div class="overlay-icon">🏘️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏘️ Historic</span><span class="badge badge-rating">⭐ 4.5</span></div></div><div class="card-body"><h3>Naramachi District</h3><div class="card-loc">📌 South Nara</div><p class="card-desc">Nara's best-preserved merchant quarter of Edo-period machiya townhouses winds through stone lanes past ochre walls, red cloth monkey charms, hidden shrines, and artisan studios where ink painting and textile dyeing carry centuries of tradition forward.</p><div class="card-facts"><div class="card-fact">⏰ <strong>All Day</strong></div><div class="card-fact">🚶 <strong>Walk from Stn</strong></div><div class="card-fact">💰 <strong>Free to Walk</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+
+      <div class="spot-card"><div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=88" alt="Horyu-ji"><div class="card-img-overlay"><div><div class="overlay-icon">🏛️</div><div class="overlay-text"><span>Hover to Preview</span></div></div></div><div class="card-badge-wrap"><span class="badge badge-cat">🏛️ UNESCO</span><span class="badge badge-rating">⭐ 4.8</span></div></div><div class="card-body"><h3>Hōryū-ji Temple</h3><div class="card-loc">📌 Ikaruga, Nara Prefecture</div><p class="card-desc">Among earth's oldest wooden structures, Hōryū-ji was founded in 607 CE by Prince Shōtoku. Its five-storey pagoda has stood 1,400 years — a miracle of ancient engineering. Japan's first UNESCO World Heritage Site holds hundreds of irreplaceable Buddhist treasures never displayed elsewhere.</p><div class="card-facts"><div class="card-fact">⏰ <strong>8am–5pm</strong></div><div class="card-fact">🚌 <strong>Horyuji Bus</strong></div><div class="card-fact">💰 <strong>¥1,500</strong></div><div class="card-fact">⏱️ <strong>1–2 hrs</strong></div></div><div class="card-divider"></div><div class="card-actions"><button class="btn-sm btn-sm-primary">Explore</button><button class="btn-sm btn-sm-outline">📌 Save</button></div></div></div>
+    </div>
+  </div>
+
+</section><!-- /explore-wrap -->
+
+<!-- SEASONS SECTION -->
+<section id="seasons">
+  <div class="seasons-inner">
+    <p class="sec-eyebrow reveal">✦ When to Visit ✦</p>
+    <h2 class="sec-title reveal">Japan Through the <em>Seasons</em></h2>
+    <p class="sec-sub reveal">Every season reveals a different Japan — each with its own palette, festivals, and unmissable experiences for the travelling soul.</p>
+    <div class="seasons-grid">
+      <div class="season-card reveal">
+        <div class="s-icon">🌸</div>
+        <h4>Spring</h4>
+        <div class="s-months">March — May</div>
+        <p>Cherry blossoms blanket every city in pink. Hanami picnics, warm days, and Japan's most photographed season. Book 6 months ahead.</p>
+        <span class="s-highlight">Peak Season</span>
+      </div>
+      <div class="season-card reveal reveal-delay-1">
+        <div class="s-icon">🌊</div>
+        <h4>Summer</h4>
+        <div class="s-months">June — August</div>
+        <p>Vibrant matsuri festivals, fireworks, and lush greenery. Hot and humid, but the Obon festival and mountain escapes make it magical.</p>
+        <span class="s-highlight" style="background:rgba(196,146,58,0.15);color:var(--gold);border-color:rgba(196,146,58,0.3);">Festival Season</span>
+      </div>
+      <div class="season-card reveal reveal-delay-2">
+        <div class="s-icon">🍁</div>
+        <h4>Autumn</h4>
+        <div class="s-months">September — November</div>
+        <p>Crimson maple leaves — koyo — transform Japan into a fiery canvas. Perfect cool weather, fewer crowds, and some of the best food of the year.</p>
+        <span class="s-highlight">Best for Photos</span>
+      </div>
+      <div class="season-card reveal reveal-delay-3">
+        <div class="s-icon">❄️</div>
+        <h4>Winter</h4>
+        <div class="s-months">December — February</div>
+        <p>Snow-dusted temples, steaming onsen hot springs, and the Sapporo Snow Festival. The quietest season with dramatic, haiku-worthy landscapes.</p>
+        <span class="s-highlight" style="background:rgba(143,175,143,0.15);color:#5a9a7a;border-color:rgba(143,175,143,0.3);">Budget Friendly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOD SECTION -->
+<section id="food">
+  <p class="sec-eyebrow reveal">✦ Japanese Cuisine ✦</p>
+  <h2 class="sec-title reveal">Taste <em>Japan</em></h2>
+  <p class="sec-sub reveal">Japan's culinary culture is a UNESCO Intangible Cultural Heritage. Each city has its own dish, each dish its own obsessive perfection.</p>
+  <div class="food-grid">
+    <div class="food-card reveal">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=500&q=85" alt="Sushi"><div class="food-img-overlay"><span>🍣</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Tokyo</div><h4>Edomae Sushi</h4><p>Tokyo-style sushi — fresh nigiri pressed by hand atop seasoned rice, served at intimate counters where chefs train for a decade.</p></div>
+    </div>
+    <div class="food-card reveal reveal-delay-1">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=500&q=85" alt="Ramen"><div class="food-img-overlay"><span>🍜</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Tokyo / Osaka</div><h4>Tonkotsu Ramen</h4><p>Rich pork bone broth simmered 12 hours, silky noodles, soft chashu pork, and a perfectly marinated soft-boiled egg. A bowl of pure comfort.</p></div>
+    </div>
+    <div class="food-card reveal reveal-delay-2">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=500&q=85" alt="Tempura"><div class="food-img-overlay"><span>🍤</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Kyoto</div><h4>Kaiseki Cuisine</h4><p>Japan's ultimate fine dining — a multi-course seasonal feast of exquisite small dishes, each a meditation on texture, colour, and flavour.</p></div>
+    </div>
+    <div class="food-card reveal reveal-delay-3">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=500&q=85" alt="Takoyaki"><div class="food-img-overlay"><span>🐙</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Osaka</div><h4>Takoyaki</h4><p>Osaka's beloved octopus balls — golden, crispy outside, molten inside — topped with bonito flakes, mayo, and sweet-savoury sauce. Eaten straight from the pan.</p></div>
+    </div>
+    <div class="food-card reveal">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=500&q=85" alt="Matcha"><div class="food-img-overlay"><span>🍵</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Kyoto / Nara</div><h4>Matcha Everything</h4><p>Ceremonial grade green tea whisked frothy in lacquered bowls, or transformed into ice cream, mochi, cakes, and lattes across Kyoto's teahouses.</p></div>
+    </div>
+    <div class="food-card reveal reveal-delay-1">
+      <div class="food-img-wrap"><img src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=500&q=85" alt="Wagyu"><div class="food-img-overlay"><span>🥩</span></div></div>
+      <div class="food-body"><div class="food-city">📌 Kobe / Kyoto</div><h4>Wagyu Beef</h4><p>Marble-patterned Kobe beef so tender it dissolves. Grilled simply at tableside, or served as sukiyaki — one of the great luxury food experiences on earth.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section id="map-section" style="padding:5rem 3rem;max-width:1380px;margin:0 auto;">
+  <p class="sec-eyebrow reveal">✦ Interactive Map ✦</p>
+  <h2 class="sec-title reveal">Find Your <em>Cities</em></h2>
+  <p class="sec-sub reveal">Explore all five cities on the map below — plan your Shinkansen route through Japan's Kansai and Kanto regions.</p>
+  <div class="map-card reveal">
+    <div class="map-topbar">
+      <span class="map-title-text">🗾 Japan — Five Cities Overview</span>
+      <div class="map-pills">
+        <span class="map-pill active">All Cities</span>
+        <span class="map-pill">Kanto Region</span>
+        <span class="map-pill">Kansai Region</span>
+      </div>
+    </div>
+    <iframe id="japanMap"
+      src="https://www.google.com/maps/embed?pb=!1m54!1m12!1m3!1d6646456.168082764!2d131.53009537823046!3d35.180736038892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m39!3e2!4m5!1s0x60188b857628235d%3A0xcdd8aef709a2b520!2sTokyo%2C%20Japan!3m2!1d35.6761919!2d139.6503106!4m5!1s0x6001a8d6cd3cc3f1%3A0xc0961d366bbb1d3d!2sKyoto%2C%20Japan!3m2!1d35.011635!2d135.7680294!4m5!1s0x6000e8ae5c4a0b99%3A0xaab17b3e4c428e48!2sOsaka%2C%20Japan!3m2!1d34.6937378!2d135.5021651!4m5!1s0x355aa20a7de91899%3A0xd11a5f9f7f98f0d8!2sHiroshima%2C%20Japan!3m2!1d34.3853222!2d132.4552972!4m5!1s0x60010e7a1e9ccd0b%3A0xf58cb5e756cf2913!2sNara%2C%20Japan!3m2!1d34.6851!2d135.8047!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Japan Map">
+    </iframe>
+    <div class="map-legend-row">
+      <div class="leg-item"><span class="leg-dot" style="background:#C4607A;"></span> Tokyo</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#C4923A;"></span> Kyoto</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#7B3F5E;"></span> Osaka</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#4A8FC4;"></span> Hiroshima</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#5A9A7A;"></span> Nara</div>
+      <span style="margin-left:auto;font-size:0.75rem;color:var(--mid);">🚅 All cities connected by JR Shinkansen</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRAVEL TIPS -->
+<section id="tips">
+  <p class="sec-eyebrow reveal">✦ Insider Advice ✦</p>
+  <h2 class="sec-title reveal">Essential <em>Travel Tips</em></h2>
+  <p class="sec-sub reveal">From a veteran Japan traveller — the practical details that make the difference between a good trip and an unforgettable one.</p>
+  <div class="tips-grid">
+    <div class="tip-card reveal"><span class="tip-icon">🚅</span><h4>Get a JR Pass</h4><p>A Japan Rail Pass covers Shinkansen bullet trains, local JR lines, and some ferries. Buy before you leave home — it's significantly cheaper and saves time at the station. The 7-day pass is ideal for 2–3 cities.</p><span class="tip-tag">Transport</span></div>
+    <div class="tip-card reveal reveal-delay-1"><span class="tip-icon">💳</span><h4>IC Card is Essential</h4><p>Load a Suica or PASMO IC card at any JR machine for seamless travel on trains, buses, and even convenience stores. One card works across every city — the single most practical item you'll carry throughout Japan.</p><span class="tip-tag">Transport</span></div>
+    <div class="tip-card reveal reveal-delay-2"><span class="tip-icon">📅</span><h4>Book Sakura Season Early</h4><p>Cherry blossom season (late March–mid April) is Japan's most magical time. Hotels and flights sell out months in advance. Book at least 5–6 months ahead. Early morning visits to parks beat the crowds beautifully.</p><span class="tip-tag">Timing</span></div>
+    <div class="tip-card reveal"><span class="tip-icon">🍱</span><h4>Eat at Convenience Stores</h4><p>Japan's 7-Eleven, Lawson, and FamilyMart are a revelation — fresh onigiri, proper hot meals, coffee, and incredible pastries available 24 hours. Locals eat here daily and proudly. Never skip them.</p><span class="tip-tag">Food</span></div>
+    <div class="tip-card reveal reveal-delay-1"><span class="tip-icon">👟</span><h4>Wear Slip-On Shoes</h4><p>Temples, traditional restaurants, and ryokan require removing shoes frequently. Slip-ons save precious seconds and spare you the balancing performance of unlacing shoes on a narrow wooden step in public.</p><span class="tip-tag">Culture</span></div>
+    <div class="tip-card reveal reveal-delay-2"><span class="tip-icon">📱</span><h4>Download Offline Maps</h4><p>Rent pocket Wi-Fi at the airport or buy a data SIM. Download Google Maps offline for every city. Japan's train network is extraordinary but complex — having navigation at all times is genuinely essential.</p><span class="tip-tag">Planning</span></div>
+    <div class="tip-card reveal"><span class="tip-icon">🏨</span><h4>Stay in a Ryokan Once</h4><p>A traditional ryokan — tatami floors, futon beds, yukata robes, onsen baths, and a multi-course kaiseki dinner — is one of Japan's greatest experiences. Budget ¥15,000–¥30,000 per person per night for a real one.</p><span class="tip-tag">Accommodation</span></div>
+    <div class="tip-card reveal reveal-delay-1"><span class="tip-icon">🙇</span><h4>Respect Temple Etiquette</h4><p>Bow slightly when entering shrines. Cleanse hands at the temizuya water pavilion. Speak softly. Don't photograph people praying. Remove shoes when required. Japanese visitors are respectful — follow their lead naturally.</p><span class="tip-tag">Culture</span></div>
+    <div class="tip-card reveal reveal-delay-2"><span class="tip-icon">💴</span><h4>Carry Cash Always</h4><p>Japan is still largely cash-based outside tourist areas. Smaller restaurants, market stalls, and temple entry counters often don't accept cards. 7-Eleven ATMs accept international cards reliably — always useful to know.</p><span class="tip-tag">Money</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">桜 Sakura Trails</div>
+      <span class="footer-logo-jp">日本の旅ガイド</span>
+      <p class="footer-about">A lovingly curated guide to Japan's most iconic destinations — built for travellers who want to go deeper than the guidebook and find the real beauty of this extraordinary country.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Cities</h5>
+      <ul class="footer-links">
+        <li><a href="#explore">Tokyo 東京</a></li>
+        <li><a href="#explore">Kyoto 京都</a></li>
+        <li><a href="#explore">Osaka 大阪</a></li>
+        <li><a href="#explore">Hiroshima 広島</a></li>
+        <li><a href="#explore">Nara 奈良</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Explore</h5>
+      <ul class="footer-links">
+        <li><a href="#seasons">Best Seasons</a></li>
+        <li><a href="#food">Cuisine Guide</a></li>
+        <li><a href="#map-section">Interactive Map</a></li>
+        <li><a href="#tips">Travel Tips</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Essentials</h5>
+      <ul class="footer-links">
+        <li><a href="#tips">JR Pass Guide</a></li>
+        <li><a href="#tips">Ryokan Guide</a></li>
+        <li><a href="#tips">Temple Etiquette</a></li>
+        <li><a href="#tips">Cash & Currency</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-note">© 2025 Sakura Trails · Crafted with 🌸 for Japan lovers everywhere</span>
+    <span class="footer-note">Photos: Unsplash · Map: Google Maps</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal(null,true)">✕</button>
+    <img src="" alt="" class="modal-img" id="modalImg">
+    <div class="modal-body">
+      <p class="modal-cat" id="modalCat"></p>
+      <h2 id="modalTitle"></h2>
+      <span class="modal-jp" id="modalJp"></span>
+      <p id="modalDesc"></p>
+      <div class="modal-facts" id="modalFacts"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─ CITY TABS ─ */
+function showCity(city, btn) {
+  document.querySelectorAll('.city-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + city).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('explore-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ─ REVEAL ON SCROLL ─ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ─ STAT COUNTERS ─ */
+function countUp(el, target, duration=1800) {
+  let start = 0;
+  const step = ts => {
+    if(!start) start = ts;
+    const prog = Math.min((ts-start)/duration, 1);
+    el.textContent = Math.floor(prog * target);
+    if(prog < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      document.querySelectorAll('[data-target]').forEach(el => {
+        countUp(el, parseInt(el.dataset.target));
+      });
+      statObs.disconnect();
+    }
+  });
+}, {threshold: 0.5});
+const statsRow = document.querySelector('.stats-row');
+if(statsRow) statObs.observe(statsRow);
+
+/* ─ NAVBAR SCROLL ─ */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if(nav) nav.style.boxShadow = window.scrollY > 60
+    ? '0 4px 24px rgba(42,31,46,0.1)' : 'none';
+});
+
+/* ─ MODAL DATA ─ */
+const modals = {
+  shibuya: {
+    title: 'Shibuya Crossing',
+    jp: '渋谷交差点',
+    cat: '📍 Landmark · Shibuya, Tokyo',
+    img: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=90',
+    desc: 'The world\'s busiest pedestrian crossing — known as Shibuya Scramble — erupts into a perfectly choreographed flood of humanity every time the traffic lights turn red. Thousands converge from all eight directions simultaneously, miraculously without collision. Surrounding the crossing are colossal LED screens advertising everything from luxury brands to anime. Viewing platforms in surrounding cafés and the Mag\'s Park rooftop observatory offer aerial views of this extraordinary spectacle. Best visited on a rainy evening when umbrella colours and neon reflections multiply the visual drama tenfold.',
+    facts: ['⏰ Open 24/7','🚇 Shibuya Station','💰 Free Entry','⏱️ 30–60 minutes','🌟 Busiest at evening rush','📸 Best view from Starbucks above']
+  },
+  sensoji: {
+    title: 'Senso-ji Temple',
+    jp: '浅草寺',
+    cat: '🏛️ Buddhist Temple · Asakusa, Tokyo',
+    img: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=90',
+    desc: 'Tokyo\'s oldest and most sacred Buddhist temple, Senso-ji was founded in 628 CE after two fishermen discovered a golden image of Kannon, goddess of mercy, in the nearby river. The legendary Kaminarimon (Thunder Gate) with its 700kg red lantern welcomes visitors into Nakamise-dori — a shopping street of traditional crafts and street snacks that has operated for over 300 years. Inside the main hall, incense smoke spirals upward and the sound of prayer bells fills the air. The five-storey pagoda and the surrounding Nakamise area are magical before dawn when the crowds are absent and mist hangs in the courtyard.',
+    facts: ['⏰ 6:00am – 5:00pm','🚇 Asakusa Station','💰 Free Entry','⏱️ 1–2 hours','🌸 Best in March (sakura)','🕯️ Founded in 628 CE']
+  }
+};
+
+function openModal(key) {
+  const d = modals[key];
+  if(!d) return;
+  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalJp').textContent = d.jp;
+  document.getElementById('modalCat').textContent = d.cat;
+  document.getElementById('modalDesc').textContent = d.desc;
+  document.getElementById('modalImg').src = d.img;
+  document.getElementById('modalImg').alt = d.title;
+  const facts = document.getElementById('modalFacts');
+  facts.innerHTML = d.facts.map(f => `<div class="modal-fact">${f}</div>`).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e, force) {
+  if(force || (e && e.target.id === 'modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(null,true); });
+
+/* ─ MAP PILLS ─ */
+document.querySelectorAll('.map-pill').forEach(pill => {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('.map-pill').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
